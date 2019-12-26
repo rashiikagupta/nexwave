@@ -1,0 +1,758 @@
+Microsoft Windows [Version 10.0.16299.64]
+(c) 2017 Microsoft Corporation. All rights reserved.
+
+C:\Users\3265>sqlplus
+
+SQL*Plus: Release 11.2.0.1.0 Production on Wed Dec 25 21:34:30 2019
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: scott
+Enter password:
+
+Connected to:
+Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800
+        20
+
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300
+        30
+
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500
+        30
+
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7566 JONES      MANAGER         7839 02-APR-81       2975
+        20
+
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400
+        30
+
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850
+        30
+
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450
+        10
+
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000
+        20
+
+      7839 KING       PRESIDENT            17-NOV-81       5000
+        10
+
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0
+        30
+
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100
+        20
+
+      7900 JAMES      CLERK           7698 03-DEC-81        950
+        30
+
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7902 FORD       ANALYST         7566 03-DEC-81       3000
+        20
+
+      7934 MILLER     CLERK           7782 23-JAN-82       1300
+        10
+
+
+14 rows selected.
+
+SQL> create table emp1(regno,name,job,doj) as select empno,ename,job,hiredate from emp;
+create table emp1(regno,name,job,doj) as select empno,ename,job,hiredate from emp
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> drop table emp1
+  2  ;
+
+Table dropped.
+
+SQL> create table emp1(regno,name,job,doj) as select empno,ename,job,hiredate from emp;
+
+Table created.
+
+SQL> select * from emp1;
+
+     REGNO NAME       JOB       DOJ
+---------- ---------- --------- ---------
+      7369 SMITH      CLERK     17-DEC-80
+      7499 ALLEN      SALESMAN  20-FEB-81
+      7521 WARD       SALESMAN  22-FEB-81
+      7566 JONES      MANAGER   02-APR-81
+      7654 MARTIN     SALESMAN  28-SEP-81
+      7698 BLAKE      MANAGER   01-MAY-81
+      7782 CLARK      MANAGER   09-JUN-81
+      7788 SCOTT      ANALYST   19-APR-87
+      7839 KING       PRESIDENT 17-NOV-81
+      7844 TURNER     SALESMAN  08-SEP-81
+      7876 ADAMS      CLERK     23-MAY-87
+
+     REGNO NAME       JOB       DOJ
+---------- ---------- --------- ---------
+      7900 JAMES      CLERK     03-DEC-81
+      7902 FORD       ANALYST   03-DEC-81
+      7934 MILLER     CLERK     23-JAN-82
+
+14 rows selected.
+
+SQL> insert into emp1(regno,name,job,doj) values(1,'Sam','SALES',SYSDATE);
+
+1 row created.
+
+SQL> select * from emp1;
+
+     REGNO NAME       JOB       DOJ
+---------- ---------- --------- ---------
+      7369 SMITH      CLERK     17-DEC-80
+      7499 ALLEN      SALESMAN  20-FEB-81
+      7521 WARD       SALESMAN  22-FEB-81
+      7566 JONES      MANAGER   02-APR-81
+      7654 MARTIN     SALESMAN  28-SEP-81
+      7698 BLAKE      MANAGER   01-MAY-81
+      7782 CLARK      MANAGER   09-JUN-81
+      7788 SCOTT      ANALYST   19-APR-87
+      7839 KING       PRESIDENT 17-NOV-81
+      7844 TURNER     SALESMAN  08-SEP-81
+      7876 ADAMS      CLERK     23-MAY-87
+
+     REGNO NAME       JOB       DOJ
+---------- ---------- --------- ---------
+      7900 JAMES      CLERK     03-DEC-81
+      7902 FORD       ANALYST   03-DEC-81
+      7934 MILLER     CLERK     23-JAN-82
+         1 Sam        SALES     25-DEC-19
+
+15 rows selected.
+
+SQL> insert into emp1(regno,name,job,doj) values(1,'Rashika','BTA','23-DEC-19');
+
+1 row created.
+
+SQL> insert into emp1(regno,name,job,doj) values(1,'Tanmay','ENGINEER','05-AUG-19');
+
+1 row created.
+
+SQL> select * from emp1;
+
+     REGNO NAME       JOB       DOJ
+---------- ---------- --------- ---------
+      7369 SMITH      CLERK     17-DEC-80
+      7499 ALLEN      SALESMAN  20-FEB-81
+      7521 WARD       SALESMAN  22-FEB-81
+      7566 JONES      MANAGER   02-APR-81
+      7654 MARTIN     SALESMAN  28-SEP-81
+      7698 BLAKE      MANAGER   01-MAY-81
+      7782 CLARK      MANAGER   09-JUN-81
+      7788 SCOTT      ANALYST   19-APR-87
+      7839 KING       PRESIDENT 17-NOV-81
+      7844 TURNER     SALESMAN  08-SEP-81
+      7876 ADAMS      CLERK     23-MAY-87
+
+     REGNO NAME       JOB       DOJ
+---------- ---------- --------- ---------
+      7900 JAMES      CLERK     03-DEC-81
+      7902 FORD       ANALYST   03-DEC-81
+      7934 MILLER     CLERK     23-JAN-82
+         1 Sam        SALES     25-DEC-19
+         1 Rashika    BTA       23-DEC-19
+         1 Tanmay     ENGINEER  05-AUG-19
+
+17 rows selected.
+
+
+SQL> UPDATE emp1 set name='MGR',doj=sysdate
+  2  where regno=1;
+
+3 rows updated.
+
+SQL> select * from emp1;
+
+     REGNO NAME       JOB       DOJ
+---------- ---------- --------- ---------
+      7369 SMITH      CLERK     17-DEC-80
+      7499 ALLEN      SALESMAN  20-FEB-81
+      7521 WARD       SALESMAN  22-FEB-81
+      7566 JONES      MANAGER   02-APR-81
+      7654 MARTIN     SALESMAN  28-SEP-81
+      7698 BLAKE      MANAGER   01-MAY-81
+      7782 CLARK      MANAGER   09-JUN-81
+      7788 SCOTT      ANALYST   19-APR-87
+      7839 KING       PRESIDENT 17-NOV-81
+      7844 TURNER     SALESMAN  08-SEP-81
+      7876 ADAMS      CLERK     23-MAY-87
+
+     REGNO NAME       JOB       DOJ
+---------- ---------- --------- ---------
+      7900 JAMES      CLERK     03-DEC-81
+      7902 FORD       ANALYST   03-DEC-81
+      7934 MILLER     CLERK     23-JAN-82
+         1 MGR        SALES     25-DEC-19
+         1 MGR        BTA       25-DEC-19
+         1 MGR        ENGINEER  25-DEC-19
+
+17 rows selected.
+
+SQL> delete from emp1 where regno=1;
+
+3 rows deleted.
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from emp1;
+
+     REGNO NAME       JOB       DOJ
+---------- ---------- --------- ---------
+      7369 SMITH      CLERK     17-DEC-80
+      7499 ALLEN      SALESMAN  20-FEB-81
+      7521 WARD       SALESMAN  22-FEB-81
+      7566 JONES      MANAGER   02-APR-81
+      7654 MARTIN     SALESMAN  28-SEP-81
+      7698 BLAKE      MANAGER   01-MAY-81
+      7782 CLARK      MANAGER   09-JUN-81
+      7788 SCOTT      ANALYST   19-APR-87
+      7839 KING       PRESIDENT 17-NOV-81
+      7844 TURNER     SALESMAN  08-SEP-81
+      7876 ADAMS      CLERK     23-MAY-87
+
+     REGNO NAME       JOB       DOJ
+---------- ---------- --------- ---------
+      7900 JAMES      CLERK     03-DEC-81
+      7902 FORD       ANALYST   03-DEC-81
+      7934 MILLER     CLERK     23-JAN-82
+
+14 rows selected.
+
+SQL> UPDATE emp1 set name='Rashika',doj='23-DEC-19'
+  2  where regno=7934;
+
+1 row updated.
+
+SQL> SAVEPOINT A;
+
+Savepoint created.
+
+SQL> DELETE FROM EMP WHERE REGNO=7521;
+DELETE FROM EMP WHERE REGNO=7521
+                      *
+ERROR at line 1:
+ORA-00904: "REGNO": invalid identifier
+
+
+SQL> DELETE FROM EMP1 WHERE regno=7521;
+
+1 row deleted.
+
+SQL> rollback to savepoint A;
+
+Rollback complete.
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> select * from emp1;
+
+     REGNO NAME       JOB       DOJ
+---------- ---------- --------- ---------
+      7369 SMITH      CLERK     17-DEC-80
+      7499 ALLEN      SALESMAN  20-FEB-81
+      7521 WARD       SALESMAN  22-FEB-81
+      7566 JONES      MANAGER   02-APR-81
+      7654 MARTIN     SALESMAN  28-SEP-81
+      7698 BLAKE      MANAGER   01-MAY-81
+      7782 CLARK      MANAGER   09-JUN-81
+      7788 SCOTT      ANALYST   19-APR-87
+      7839 KING       PRESIDENT 17-NOV-81
+      7844 TURNER     SALESMAN  08-SEP-81
+      7876 ADAMS      CLERK     23-MAY-87
+
+     REGNO NAME       JOB       DOJ
+---------- ---------- --------- ---------
+      7900 JAMES      CLERK     03-DEC-81
+      7902 FORD       ANALYST   03-DEC-81
+      7934 MILLER     CLERK     23-JAN-82
+
+14 rows selected.
+
+SQL> UPDATE emp1 set name='MGR',doj=sysdate;
+
+14 rows updated.
+
+SQL> select * from emp1;
+
+     REGNO NAME       JOB       DOJ
+---------- ---------- --------- ---------
+      7369 MGR        CLERK     25-DEC-19
+      7499 MGR        SALESMAN  25-DEC-19
+      7521 MGR        SALESMAN  25-DEC-19
+      7566 MGR        MANAGER   25-DEC-19
+      7654 MGR        SALESMAN  25-DEC-19
+      7698 MGR        MANAGER   25-DEC-19
+      7782 MGR        MANAGER   25-DEC-19
+      7788 MGR        ANALYST   25-DEC-19
+      7839 MGR        PRESIDENT 25-DEC-19
+      7844 MGR        SALESMAN  25-DEC-19
+      7876 MGR        CLERK     25-DEC-19
+
+     REGNO NAME       JOB       DOJ
+---------- ---------- --------- ---------
+      7900 MGR        CLERK     25-DEC-19
+      7902 MGR        ANALYST   25-DEC-19
+      7934 MGR        CLERK     25-DEC-19
+
+14 rows selected.
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> select * from emp1;
+
+     REGNO NAME       JOB       DOJ
+---------- ---------- --------- ---------
+      7369 SMITH      CLERK     17-DEC-80
+      7499 ALLEN      SALESMAN  20-FEB-81
+      7521 WARD       SALESMAN  22-FEB-81
+      7566 JONES      MANAGER   02-APR-81
+      7654 MARTIN     SALESMAN  28-SEP-81
+      7698 BLAKE      MANAGER   01-MAY-81
+      7782 CLARK      MANAGER   09-JUN-81
+      7788 SCOTT      ANALYST   19-APR-87
+      7839 KING       PRESIDENT 17-NOV-81
+      7844 TURNER     SALESMAN  08-SEP-81
+      7876 ADAMS      CLERK     23-MAY-87
+
+     REGNO NAME       JOB       DOJ
+---------- ---------- --------- ---------
+      7900 JAMES      CLERK     03-DEC-81
+      7902 FORD       ANALYST   03-DEC-81
+      7934 MILLER     CLERK     23-JAN-82
+
+14 rows selected.
+
+SQL> insert into emp1(regno,name,job,doj) values(1,'Rashika','BTA','23-DEC-19');
+
+1 row created.
+
+SQL> insert into emp1(regno,name,job,doj) values(2,'Tanmay','ENGINEER','05-AUG-19');
+
+1 row created.
+
+SQL> SAVEPOINT A;
+
+Savepoint created.
+
+SQL> UPDATE emp1 set name='MGR',doj=sysdate
+  2  where regno=7934;
+
+1 row updated.
+
+SQL> SAVEPOINT B;
+
+Savepoint created.
+
+SQL> select * from emp1;
+
+     REGNO NAME       JOB       DOJ
+---------- ---------- --------- ---------
+      7369 SMITH      CLERK     17-DEC-80
+      7499 ALLEN      SALESMAN  20-FEB-81
+      7521 WARD       SALESMAN  22-FEB-81
+      7566 JONES      MANAGER   02-APR-81
+      7654 MARTIN     SALESMAN  28-SEP-81
+      7698 BLAKE      MANAGER   01-MAY-81
+      7782 CLARK      MANAGER   09-JUN-81
+      7788 SCOTT      ANALYST   19-APR-87
+      7839 KING       PRESIDENT 17-NOV-81
+      7844 TURNER     SALESMAN  08-SEP-81
+      7876 ADAMS      CLERK     23-MAY-87
+
+     REGNO NAME       JOB       DOJ
+---------- ---------- --------- ---------
+      7900 JAMES      CLERK     03-DEC-81
+      7902 FORD       ANALYST   03-DEC-81
+      7934 MGR        CLERK     25-DEC-19
+         1 Rashika    BTA       23-DEC-19
+         2 Tanmay     ENGINEER  05-AUG-19
+
+16 rows selected.
+
+SQL> ROLLBACK TO SAVEPOINT B;
+
+Rollback complete.
+
+SQL> select * from emp1;
+
+     REGNO NAME       JOB       DOJ
+---------- ---------- --------- ---------
+      7369 SMITH      CLERK     17-DEC-80
+      7499 ALLEN      SALESMAN  20-FEB-81
+      7521 WARD       SALESMAN  22-FEB-81
+      7566 JONES      MANAGER   02-APR-81
+      7654 MARTIN     SALESMAN  28-SEP-81
+      7698 BLAKE      MANAGER   01-MAY-81
+      7782 CLARK      MANAGER   09-JUN-81
+      7788 SCOTT      ANALYST   19-APR-87
+      7839 KING       PRESIDENT 17-NOV-81
+      7844 TURNER     SALESMAN  08-SEP-81
+      7876 ADAMS      CLERK     23-MAY-87
+
+     REGNO NAME       JOB       DOJ
+---------- ---------- --------- ---------
+      7900 JAMES      CLERK     03-DEC-81
+      7902 FORD       ANALYST   03-DEC-81
+      7934 MGR        CLERK     25-DEC-19
+         1 Rashika    BTA       23-DEC-19
+         2 Tanmay     ENGINEER  05-AUG-19
+
+16 rows selected.
+
+SQL> ROLLBACK TO SAVEPOINT A;
+
+Rollback complete.
+
+SQL> select * from emp1;
+
+     REGNO NAME       JOB       DOJ
+---------- ---------- --------- ---------
+      7369 SMITH      CLERK     17-DEC-80
+      7499 ALLEN      SALESMAN  20-FEB-81
+      7521 WARD       SALESMAN  22-FEB-81
+      7566 JONES      MANAGER   02-APR-81
+      7654 MARTIN     SALESMAN  28-SEP-81
+      7698 BLAKE      MANAGER   01-MAY-81
+      7782 CLARK      MANAGER   09-JUN-81
+      7788 SCOTT      ANALYST   19-APR-87
+      7839 KING       PRESIDENT 17-NOV-81
+      7844 TURNER     SALESMAN  08-SEP-81
+      7876 ADAMS      CLERK     23-MAY-87
+
+     REGNO NAME       JOB       DOJ
+---------- ---------- --------- ---------
+      7900 JAMES      CLERK     03-DEC-81
+      7902 FORD       ANALYST   03-DEC-81
+      7934 MILLER     CLERK     23-JAN-82
+         1 Rashika    BTA       23-DEC-19
+         2 Tanmay     ENGINEER  05-AUG-19
+
+16 rows selected.
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> select * from emp1;
+
+     REGNO NAME       JOB       DOJ
+---------- ---------- --------- ---------
+      7369 SMITH      CLERK     17-DEC-80
+      7499 ALLEN      SALESMAN  20-FEB-81
+      7521 WARD       SALESMAN  22-FEB-81
+      7566 JONES      MANAGER   02-APR-81
+      7654 MARTIN     SALESMAN  28-SEP-81
+      7698 BLAKE      MANAGER   01-MAY-81
+      7782 CLARK      MANAGER   09-JUN-81
+      7788 SCOTT      ANALYST   19-APR-87
+      7839 KING       PRESIDENT 17-NOV-81
+      7844 TURNER     SALESMAN  08-SEP-81
+      7876 ADAMS      CLERK     23-MAY-87
+
+     REGNO NAME       JOB       DOJ
+---------- ---------- --------- ---------
+      7900 JAMES      CLERK     03-DEC-81
+      7902 FORD       ANALYST   03-DEC-81
+      7934 MILLER     CLERK     23-JAN-82
+
+14 rows selected.
+
+SQL> create table t11(name,varchar2(9),regno number(10),dob date);
+create table t11(name,varchar2(9),regno number(10),dob date)
+                      *
+ERROR at line 1:
+ORA-00904: : invalid identifier
+
+
+SQL> create table t11(name varchar2(9),regno number(10),dob date);
+
+Table created.
+
+SQL> desc t11;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NAME                                               VARCHAR2(9)
+ REGNO                                              NUMBER(10)
+ DOB                                                DATE
+
+SQL> alter table t11 add addrs varchar2(80);
+
+Table altered.
+
+SQL> desc t11;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NAME                                               VARCHAR2(9)
+ REGNO                                              NUMBER(10)
+ DOB                                                DATE
+ ADDRS                                              VARCHAR2(80)
+
+SQL> alter table t11 rename column regno to empno;
+
+Table altered.
+
+SQL> desc t11;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NAME                                               VARCHAR2(9)
+ EMPNO                                              NUMBER(10)
+ DOB                                                DATE
+ ADDRS                                              VARCHAR2(80)
+
+SQL> alter table t11 drop column addrs;
+
+Table altered.
+
+SQL> desc t11;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NAME                                               VARCHAR2(9)
+ EMPNO                                              NUMBER(10)
+ DOB                                                DATE
+
+SQL> select * from t1;
+select * from t1
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> flashback table t11 to before drop;
+flashback table t11 to before drop
+*
+ERROR at line 1:
+ORA-38305: object not in RECYCLE BIN
+
+
+SQL> flashback table t11 to before  drop;
+flashback table t11 to before  drop
+*
+ERROR at line 1:
+ORA-38305: object not in RECYCLE BIN
+
+
+SQL> select * from t1;
+select * from t1
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from t11;
+
+no rows selected
+
+SQL> desc t11;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NAME                                               VARCHAR2(9)
+ EMPNO                                              NUMBER(10)
+ DOB                                                DATE
+
+SQL> desc tnames;
+ERROR:
+ORA-04043: object tnames does not exist
+
+
+SQL> rename t11 to tnames;
+
+Table renamed.
+
+SQL> desc tnames;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NAME                                               VARCHAR2(9)
+ EMPNO                                              NUMBER(10)
+ DOB                                                DATE
+
+SQL> truncate table t11;
+truncate table t11
+               *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> truncate table tnames;
+
+Table truncated.
+
+SQL> desc tnames;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NAME                                               VARCHAR2(9)
+ EMPNO                                              NUMBER(10)
+ DOB                                                DATE
+
+SQL> create table u1(regno number unique,name varchar2(9));
+
+Table created.
+
+SQL> desc u1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                              NUMBER
+ NAME                                               VARCHAR2(9)
+
+SQL> create table pp1(name varchar2(10),regno number(10) primary key);
+
+Table created.
+
+SQL> CREATE TABLE Persons (
+  2      ID int NOT NULL UNIQUE,
+  3      LastName varchar(255) NOT NULL,
+  4      FirstName varchar(255),
+  5      Age int
+  6  );
+
+Table created.
+
+SQL> ALTER TABLE Persons
+  2  ADD UNIQUE (ID);
+ADD UNIQUE (ID)
+    *
+ERROR at line 2:
+ORA-02261: such unique or primary key already exists in the table
+
+
+SQL> select * from Persons;
+
+no rows selected
+
+SQL> desc persons;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(38)
+ LASTNAME                                  NOT NULL VARCHAR2(255)
+ FIRSTNAME                                          VARCHAR2(255)
+ AGE                                                NUMBER(38)
+
+SQL> desc user_constraints;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ OWNER                                              VARCHAR2(30)
+ CONSTRAINT_NAME                           NOT NULL VARCHAR2(30)
+ CONSTRAINT_TYPE                                    VARCHAR2(1)
+ TABLE_NAME                                NOT NULL VARCHAR2(30)
+ SEARCH_CONDITION                                   LONG
+ R_OWNER                                            VARCHAR2(30)
+ R_CONSTRAINT_NAME                                  VARCHAR2(30)
+ DELETE_RULE                                        VARCHAR2(9)
+ STATUS                                             VARCHAR2(8)
+ DEFERRABLE                                         VARCHAR2(14)
+ DEFERRED                                           VARCHAR2(9)
+ VALIDATED                                          VARCHAR2(13)
+ GENERATED                                          VARCHAR2(14)
+ BAD                                                VARCHAR2(3)
+ RELY                                               VARCHAR2(4)
+ LAST_CHANGE                                        DATE
+ INDEX_OWNER                                        VARCHAR2(30)
+ INDEX_NAME                                         VARCHAR2(30)
+ INVALID                                            VARCHAR2(7)
+ VIEW_RELATED                                       VARCHAR2(14)
+
+SQL> select owner,constraint_name,consraint_type from user_constraints
+  2  where table_name='EMP';
+select owner,constraint_name,consraint_type from user_constraints
+                             *
+ERROR at line 1:
+ORA-00904: "CONSRAINT_TYPE": invalid identifier
+
+
+SQL> select owner,constraint_name,constraint_type from user_constraints
+  2  where table_name='EMP';
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+SCOTT                          PK_EMP                         P
+SCOTT                          FK_DEPTNO                      R
+
+SQL> desc user_cons_columns;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ OWNER                                     NOT NULL VARCHAR2(30)
+ CONSTRAINT_NAME                           NOT NULL VARCHAR2(30)
+ TABLE_NAME                                NOT NULL VARCHAR2(30)
+ COLUMN_NAME                                        VARCHAR2(4000)
+ POSITION                                           NUMBER
+
+SQL> show user
+USER is "SCOTT"
+SQL> conn sys as sysdba
+Enter password:
+Connected.
+SQL> show user
+USER is "SYS"
+SQL> create user tom identified by cat;
+
+User created.
+
+SQL> grant connect, resource to tom;
+
+Grant succeeded.
+
+SQL> conn scott
+Enter password:
+Connected.
+SQL> show user
+USER is "SCOTT"
+SQL> grant select on emp to tom;
+
+Grant succeeded.
+
+SQL> revoke select on emp from tom;
+
+Revoke succeeded.
+
+SQL> conn sys as sysdba
+Enter password:
+Connected.
+SQL> show user
+USER is "SYS"
+SQL> drop user tom;
+
+User dropped.
+
+SQL> conn scott
+Enter password:
+Connected.
+SQL>
