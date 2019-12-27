@@ -1,0 +1,558 @@
+
+
+SQL> set serveroutput on
+SQL> /
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  v_name varchar2(10);
+  3  begin
+  4  v_name:='Rashika';
+  5  dbms_output.put_line('My name is '||v_name);
+  6* end;
+SQL> /
+My name is Rashika
+
+PL/SQL procedure successfully completed.
+
+SQL>/
+  1  declare
+  2  numb1 NUMBER:=&v_numb1;
+  3  numb2 NUMBER:=&v_numb2;
+  4  numb3 NUMBER;
+  5  begin
+  6  numb3:=numb1+numb2;
+  7  dbms_output.put_line('The sum is '||numb3);
+  8* end;
+SQL> /
+Enter value for v_numb1: 4
+old   2: numb1 NUMBER:=&v_numb1;
+new   2: numb1 NUMBER:=4;
+Enter value for v_numb2: 6
+old   3: numb2 NUMBER:=&v_numb2;
+new   3: numb2 NUMBER:=6;
+The sum is 10
+
+PL/SQL procedure successfully completed.
+SQL> ED
+Wrote file afiedt.buf
+
+  1   declare
+  2   numb1 NUMBER(10);
+  3   numb2 NUMBER(10);
+  4   numb3 NUMBER(20);
+  5   begin
+  6  NUMB1:=3;
+  7  NUMB2:=4;
+  8   numb3:=numb1+numb2;
+  9   dbms_output.put_line('The sum is '||numb3);
+ 10*  end;
+ 11  /
+The sum is 7
+
+PL/SQL procedure successfully completed.
+SQL> ed
+Wrote file afiedt.buf
+
+
+SQL> /
+Enter value for r_empno: 7934
+old   5: r_empno emp.empno%type:=&r_empno;
+new   5: r_empno emp.empno%type:=7934;
+MILLER
+CLERK
+7934
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+Enter value for a: 25
+old   2: a number :=&a;
+new   2: a number :=25;
+Enter value for b: 30
+old   3: b number :=&b;
+new   3: b number :=30;
+
+PL/SQL procedure successfully completed.
+
+SQL> print c
+
+         C
+----------
+        55
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  a number :=&a;
+  3  b number :=&b;
+  4  begin
+  5  :c:=a+b;
+  6  dbms_output.put_line(:c);
+  7* end;
+  8  /
+Enter value for a: 4
+old   2: a number :=&a;
+new   2: a number :=4;
+Enter value for b: 6
+old   3: b number :=&b;
+new   3: b number :=6;
+10
+
+PL/SQL procedure successfully completed.
+
+SQL> print c
+
+         C
+----------
+        10
+
+SQL> variable  p_name varchar2(10)
+SQL> variable p_job varchar2(9)
+SQL> variable p_sal number
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2     r_empno emp.empno%type:=&r_empno;
+  3  begin
+  4     select ename,job,sal into
+  5      :p_name,:p_job,:p_sal
+  6     from emp
+  7     where empno=r_empno;
+  8* end;
+SQL> /
+Enter value for r_empno: 7934
+old   2:    r_empno emp.empno%type:=&r_empno;
+new   2:    r_empno emp.empno%type:=7934;
+
+PL/SQL procedure successfully completed.
+
+SQL> print p_name p_job p_sal
+
+P_NAME
+--------------------------------
+MILLER
+
+
+P_JOB
+--------------------------------
+CLERK
+
+
+     P_SAL
+----------
+      1300
+
+SQL> create sequence s1 start with 1 increment by 1 maxvalue 20;
+
+Sequence created.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  v_new_id Number;
+  3  begin
+  4  v_new_id:=s1.nextval;
+  5  dbms_output.put_line(v_new_id);
+  6* end;
+SQL> /
+1
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+2
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+3
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  BEGIN<<OUTER>>
+  2  declare
+  3    v_father_name VARCHAR2(20):='Patrick';
+  4    v_date_of_birth DATE:='20-Apr-1972';
+  5   BEGIN
+  6     DECLARE
+  7       v_child_name VARCHAR2(20):='Mike';
+  8       v_date_of_birth DATE:='12-Dec-2002';
+  9     BEGIN
+ 10       dbms_output.put_line('Father''s Name: '||v_father_name);
+ 11       dbms_output.put_line('Date of birth: '||outer.v_date_of_birth);
+ 12      dbms_output.put_line('Child''s Name: '||v_child_name);
+ 13      dbms_output.put_line('Date of birth: '||v_date_of_birth);
+ 14     End;
+ 15   end;
+ 16* end outer;
+SQL> /
+Father's Name: Patrick
+Date of birth: 20-APR-72
+Child's Name: Mike
+Date of birth: 12-DEC-02
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2    v_myage number:=&myage;
+  3  BEGIN
+  4    if v_myage<11 Then
+  5        dbms_output.put_line('I am a child');
+  6      elsif v_myage <20 then
+  7        dbms_output.put_line('I am young');
+  8      elsif v_myage <30 then
+  9        dbms_output.put_line('I am in my twenties');
+ 10      elsif v_myage <40 then
+ 11        dbms_output.put_line('I am in my thirties');
+ 12      else
+ 13        dbms_output.put_line('I am always young');
+ 14    end if;
+ 15* END;
+SQL> /
+Enter value for myage: 22
+old   2:   v_myage number:=&myage;
+new   2:   v_myage number:=22;
+I am in my twenties
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  v_counter Number(2):=1;
+  3  begin
+  4  loop
+  5  v_counter:=v_counter+1;
+  6  dbms_output.put_line(v_counter);
+  7  exit when v_counter>4;
+  8  end loop;
+  9* end;
+SQL> /
+2
+3
+4
+5
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  begin
+  2     for i in 1..5 loop
+  3       for j in 1..i loop
+  4       dbms_output.put('*');
+  5     end loop;
+  6  dbms_output.put_line('');
+  7  end loop;
+  8* end;
+SQL> /
+*
+**
+***
+****
+*****
+
+PL/SQL procedure successfully completed.
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2    v_emp emp%rowtype;
+  3    v_empno emp.empno%type:=&v_empno;
+  4  begin
+  5    select * into v_emp from emp
+  6    where empno=v_empno;
+  7    dbms_output.put_line(v_emp.ename||' '||v_emp.sal);
+  8* end;
+SQL> /
+Enter value for v_empno: 7839
+old   3:   v_empno emp.empno%type:=&v_empno;
+new   3:   v_empno emp.empno%type:=7839;
+KING 5000
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  cursor c1 is select ename,sal from emp
+  3  where deptno=10;
+  4  v_name emp.ename%type;
+  5  v_sal emp.sal%type;
+  6  begin
+  7  open c1;
+  8  loop
+  9  fetch c1 into v_name,v_sal;
+ 10  exit when c1%notfound;
+ 11  dbms_output.put_line(v_name||' '||v_sal);
+ 12  end loop;
+ 13  close c1;
+ 14* end;
+SQL> /
+CLARK 2450
+KING 5000
+MILLER 1300
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2  cursor c1 is select * from emp
+  3  where deptno=10;
+  4  v_emprec emp%rowtype;
+  5  begin
+  6  open c1;
+  7  loop
+  8  fetch c1 into v_emprec;
+  9  exit when c1%notfound;
+ 10  dbms_output.put_line(v_emprec.ename||' '||v_emprec.sal||' '||v_emprec.job);
+ 11  end loop;
+ 12  close c1;
+ 13* end;
+SQL> /
+CLARK 2450 MANAGER
+KING 5000 PRESIDENT
+MILLER 1300 CLERK
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1      declare
+  2      cursor c1 is select * from emp
+  3      where deptno=10;
+  4     v_emprec emp%rowtype;
+  5      begin
+  6      if not c1%isopen then
+  7      open c1;
+  8      end if;
+  9     loop
+ 10     fetch c1 into v_emprec;
+ 11     exit when c1%notfound and c1%rowcount>=2;
+ 12    dbms_output.put_line(v_emprec.ename||' '||v_emprec.sal||' '||v_emprec.job);
+ 13    end loop;
+ 14    close c1;
+ 15*   end;
+
+SQL> set serveroutput on;
+SQL> /
+CLARK 2450 MANAGER
+KING 5000 PRESIDENT
+MILLER 1300 CLERK
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1   declare
+  2      cursor c1 is select empno,hiredate from emp
+  3      where deptno=20;
+  4      begin
+  5      for i in c1
+  6     loop
+  7    dbms_output.put_line(i.empno||' '||i.hiredate);
+  8    end loop;
+  9*   end;
+ 10  /
+7369 17-DEC-80
+7566 02-APR-81
+7788 19-APR-87
+7876 23-MAY-87
+7902 03-DEC-81
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1      begin
+  2      for i in(select empno,hiredate from emp
+  3      where deptno=20)
+  4     loop
+  5    dbms_output.put_line(i.empno||' '||i.hiredate);
+  6    end loop;
+  7*   end;
+SQL> /
+7369 17-DEC-80
+7566 02-APR-81
+7788 19-APR-87
+7876 23-MAY-87
+7902 03-DEC-81
+
+PL/SQL procedure successfully completed.
+
+  1  declare
+  2  cursor c1(v_deptno number,v_job varchar2) is select * from emp
+  3  where deptno=v_deptno
+  4  and job=v_job;
+  5  v_emprec emp%rowtype;
+  6  begin
+  7  if not c1%isopen then
+  8  open c1(&v_deptno,'&v_job');
+  9  end if;
+ 10  loop
+ 11  fetch c1 into v_emprec;
+ 12  exit when c1%notfound;
+ 13  dbms_output.put_line(v_emprec.ename||' '||v_emprec.sal||' '||v_emprec.job);
+ 14  end loop;
+ 15  close c1;
+ 16* end;
+SQL> /
+Enter value for v_deptno: 20
+Enter value for v_job: CLERK
+old   8: open c1(&v_deptno,'&v_job');
+new   8: open c1(20,'CLERK');
+SMITH 800 CLERK
+ADAMS 1100 CLERK
+
+------------------Exception Handling------------------
+
+  1  DECLARE
+  2     v_deptno emp.deptno%type:=&v_deptno;
+  3     v_ename emp.ename%type;
+  4  BEGIN
+  5     Select ename into v_ename
+  6     from emp
+  7     where deptno=v_deptno;
+  8* END;
+SQL> /
+Enter value for v_deptno: 1
+old   2:    v_deptno emp.deptno%type:=&v_deptno;
+new   2:    v_deptno emp.deptno%type:=1;
+DECLARE
+*
+ERROR at line 1:
+ORA-01403: no data found
+ORA-06512: at line 5
+
+
+SQL> /
+Enter value for v_deptno: 10
+old   2:    v_deptno emp.deptno%type:=&v_deptno;
+new   2:    v_deptno emp.deptno%type:=10;
+DECLARE
+*
+ERROR at line 1:
+ORA-01422: exact fetch returns more than requested number of rows
+ORA-06512: at line 5
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2     v_deptno emp.deptno%type:=&v_deptno;
+  3     v_ename emp.ename%type;
+  4  BEGIN
+  5     Select ename into v_ename
+  6     from emp
+  7     where deptno=v_deptno;
+  8  exception
+  9     when too_many_rows then
+ 10     dbms_output.put_line('Many rows');
+ 11     when no_data_found then
+ 12     dbms_output.put_line('No Value');
+ 13* END;
+SQL> /
+Enter value for v_deptno: 1
+old   2:    v_deptno emp.deptno%type:=&v_deptno;
+new   2:    v_deptno emp.deptno%type:=1;
+No Value
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+Enter value for v_deptno: 10
+old   2:    v_deptno emp.deptno%type:=&v_deptno;
+new   2:    v_deptno emp.deptno%type:=10;
+Many rows
+
+PL/SQL procedure successfully completed.
+
+
+
+  1  DECLARE
+  2     v_deptno emp.deptno%type:=&v_deptno;
+  3     v_ename emp.ename%type;
+  4  BEGIN
+  5     Select ename into v_ename
+  6     from emp
+  7     where deptno=v_deptno;
+  8  exception
+  9     /*when too_many_rows then
+ 10     dbms_output.put_line('Many rows');
+ 11     when no_data_found then
+ 12     dbms_output.put_line('No Value');*/
+ 13  when others then
+ 14  dbms_output.put_line(' ');
+ 15  dbms_output.put_line('An error Occurred');
+ 16* END;
+SQL> /
+Enter value for v_deptno: 1
+old   2:    v_deptno emp.deptno%type:=&v_deptno;
+new   2:    v_deptno emp.deptno%type:=1;
+An error Occurred
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+Enter value for v_deptno: 12
+old   2:    v_deptno emp.deptno%type:=&v_deptno;
+new   2:    v_deptno emp.deptno%type:=12;
+An error Occurred
+
+PL/SQL procedure successfully completed.
+
+
+
+
+  1  DECLARE
+  2     E1 EXCEPTION;
+  3     PRAGMA EXCEPTION_INIT(E1,-02292);
+  4  BEGIN
+  5     DELETE FROM dept
+  6         where deptno=10;
+  7     EXCEPTION
+  8        when E1 THEN
+  9        dbms_output.put_line('You cannot delete the parent table');
+ 10       dbms_output.put_line(SQLERRM);
+ 11*   END;
+SQL> /
+You cannot delete the parent table
+ORA-02292: integrity constraint (SCOTT.FK_DEPTNO) violated - child record found
+
+PL/SQL procedure successfully completed.
+
+
+
+
+SQL> /
+Enter value for a: a
+old   1: DELETE FROM dept WHERE DEPTNO='&a'
+new   1: DELETE FROM dept WHERE DEPTNO='a'
+DELETE FROM dept WHERE DEPTNO='a'
+                              
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+------------------------end--------------------------
+
