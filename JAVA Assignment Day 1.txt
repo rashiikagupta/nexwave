@@ -1,0 +1,264 @@
+Assignment on JAVA
+
+[1]
+
+public class Pattern {
+	public static void main(String args[])
+	{
+		
+		for(int i=1;i<=5;i++)
+		{
+			for(int j=1;j<=i;j++)
+			{
+				if(i%2!=0)
+					System.out.print("*");
+				else
+					System.out.print("+");
+			}
+			System.out.println();
+		}
+		
+	}
+
+} 
+
+Output:-
+
+*
+++
+***
+++++
+*****
+
+
+
+
+
+[2]
+
+public class count 
+{
+	static int c;
+	count()
+	{
+		c++;
+	}
+	public static void main(String args[])
+	{
+		count c1=new count();
+		count c2=new count();
+		count c3=new count();
+		count c4=new count();
+		System.out.println("The count of objects created is "+c);
+        } 
+}
+
+Output:-
+
+The count of objects created is 4.
+
+
+
+
+
+[3]
+
+public class Calculation {
+	int a,b;
+	Calculation(int x,int y)
+	{
+		a=x;
+		b=y;
+	}
+	int sum()
+	{
+		return(a+b);
+	}
+	int quotient()
+	{
+		return(a/b);
+	}
+	int product()
+	{
+		return(a*b);
+	}
+	int difference()
+	{
+		return(a-b);
+	}
+	
+    public static void main(String args[])
+    {
+    	Calculation c=new Calculation(10,5);
+    	System.out.println("The sum is "+c.sum()+", "+"The difference is "+c.difference()+", "+"The quotient is "+c.quotient()+", "+"The product is "+c.product()+".");
+    }
+}
+
+Output:-
+
+The sum is 15, The difference is 5, The quotient is 2, The product is 50.
+
+
+
+
+
+[4]
+
+import java.util.*;
+public class Small {
+	int smaller(int a, int b, int c)
+	{
+		if(a<b && a<c) 
+			return a;
+		
+		else if(b<a && b<c)
+			return b;
+		
+		else
+			return c;
+	}
+public static void main(String args[])
+{
+	Scanner sc=new Scanner(System.in);
+	System.out.println("Enter three numbers");
+	int num1=sc.nextInt();
+	int num2=sc.nextInt();
+	int num3=sc.nextInt();
+	Small s= new Small();
+	int out=s.smaller(num1, num2, num3);
+	System.out.println("The smallest of the three numbers is "+out);
+	
+}
+}
+
+Output:-
+
+Enter three numbers
+45
+4
+6
+The smallest of the three numbers is 4
+
+
+
+
+
+[5]
+
+import java.util.*;
+public class CurrentDate {
+	public static void main(String args[])
+	{
+		System.out.println(java.time.LocalDate.now()+" "+java.time.LocalTime.now()); 
+	}
+}
+
+
+Output:-
+
+2019-12-30 03:31:32.467
+
+
+
+
+
+[6]
+
+import java.util.Scanner;
+
+public class Factorial {
+	int fact(int a)
+	{
+		int f=1;
+		for(int i=a;i>0;i--)
+			f=f*i;
+		return f;
+	}
+public static void main(String args[])
+{
+	Scanner sc=new Scanner(System.in);
+	System.out.println("Enter the number who's factorial you want to calculate");
+	int num=sc.nextInt();
+	Factorial fc=new Factorial();
+	int output=fc.fact(num);
+	System.out.println("the factorial is "+output);
+}
+}
+
+Output:-
+
+Enter the number who's factorial you want to calculate
+7
+the factorial is 5040
+
+
+
+
+
+[7]
+
+ class student1 {
+	int id;
+	String name;
+}
+ class student{
+	
+	public static void main(String[] args)
+	{
+		student1 s = new student1();
+		s.id=101;
+		s.name="Rashika";
+		System.out.println(s.id);
+		System.out.println(s.name);
+	}
+}
+
+Output:-
+
+101
+Rashika
+
+
+
+
+
+[8]
+
+ class TestStudent {
+	int rollno;
+	String name;
+	void insertRecord(int r,String n) {
+		rollno=r;
+		name=n;
+	
+	}
+	void displayInfo()
+	{
+		System.out.println(rollno+" "+name);
+	}
+ }
+	class TestStudent1{
+		public static void main(String args[])
+		{
+			TestStudent s1=new TestStudent();
+			TestStudent s2=new TestStudent();
+			s1.insertRecord(111,"Tanmay");
+			s2.insertRecord(112, "Rashika");
+			s1.displayInfo();
+			s2.displayInfo();
+		}
+	}
+
+Output:-
+
+111 Tanmay
+112 Rashika
+
+
+
+
+
+
+
+
+
