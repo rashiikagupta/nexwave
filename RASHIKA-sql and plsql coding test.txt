@@ -1,0 +1,265 @@
+SQL> SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800
+        20
+
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300
+        30
+
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500
+        30
+
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7566 JONES      MANAGER         7839 02-APR-81       2975
+        20
+
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400
+        30
+
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850
+        30
+
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450
+        10
+
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000
+        20
+
+      7839 KING       PRESIDENT            17-NOV-81       5000
+        10
+
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0
+        30
+
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100
+        20
+
+      7900 JAMES      CLERK           7698 03-DEC-81        950
+        30
+
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7902 FORD       ANALYST         7566 03-DEC-81       3000
+        20
+
+      7934 MILLER     CLERK           7782 23-JAN-82       1300
+        10
+
+
+14 rows selected.
+
+SQL> SELECT NVL(COMM,0) FROM EMP;
+
+NVL(COMM,0)
+-----------
+          0
+        300
+        500
+          0
+       1400
+          0
+          0
+          0
+          0
+          0
+          0
+
+NVL(COMM,0)
+-----------
+          0
+          0
+          0
+
+14 rows selected.
+
+SQL> SELECT * FROM DEPT;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+______________________________________________________________________________________________________________________________________________________________________
+
+[1] List the following details of employees who earn more than or equal to $40000 a year or who are clerks.
+
+______QUERY______
+
+SQL> SELECT ename, job, (sal*12)+nvl(comm,0) as Annual_Sal, e.deptno, dname from emp e,dept d where e.deptno=d.deptno AND(JOB='CLERK' OR (sal*12)+nvl(comm,0)>=40000);
+
+______OUTPUT______
+
+ENAME      JOB       ANNUAL_SAL     DEPTNO DNAME
+---------- --------- ---------- ---------- --------------
+MILLER     CLERK          15600         10 ACCOUNTING
+KING       PRESIDENT      60000         10 ACCOUNTING
+SMITH      CLERK           9600         20 RESEARCH
+ADAMS      CLERK          13200         20 RESEARCH
+JAMES      CLERK          11400         30 SALES
+
+______________________________________________________________________________________________________________________________________________________________________
+
+[2] Select a query that displays employees names along with dept numbers and dept names working in dept 30 or 40.For the dept with no employees,
+    null values should be displayed for the employee names.
+
+______QUERY______
+
+SQL> SELECT ename,d.deptno,d.dname from dept d full outer join emp e on e.deptno=d.deptno where d.deptno=30 or d.deptno=40;
+
+______OUTPUT______
+
+ENAME          DEPTNO DNAME
+---------- ---------- --------------
+ALLEN              30 SALES
+WARD               30 SALES
+MARTIN             30 SALES
+BLAKE              30 SALES
+TURNER             30 SALES
+JAMES              30 SALES
+                   40 OPERATIONS
+
+______________________________________________________________________________________________________________________________________________________________________
+
+PLSQL
+
+[1] Write a PL/SQL block that accepts the name of an employee and displays the details of the employee from emp table. 
+    If there are more than one employee with same name then exception “duplicate entries” must be displayed.
+
+
+
+SQL> set serveroutput on
+SQL> DECLARE
+  2  .
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2     e_details emp%rowtype;
+  3  BEGIN
+  4     SELECT * into e_details from emp where emp.ename='&name';
+  5     dbms_output.put_line(e_details.empno||' '||e_details.ename||' '||e_details.job||' '||e_details.mgr||' '||e_details.hiredate||' '||e_details.deptno);
+  6    exception
+  7     when too_many_rows then
+  8     dbms_output.put_line('Duplicate Entries');
+  9     when others then
+ 10     dbms_output.put_line('Wrong Name');
+ 11* END;
+SQL> /
+Enter value for name: king
+old   4:    SELECT * into e_details from emp where emp.ename='&name';
+new   4:    SELECT * into e_details from emp where emp.ename='king';
+
+Wrong Name
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+Enter value for name: KING
+old   4:    SELECT * into e_details from emp where emp.ename='&name';
+new   4:    SELECT * into e_details from emp where emp.ename='KING';
+
+7839 KING PRESIDENT  17-NOV-81 10
+
+PL/SQL procedure successfully completed.
+
+_____________________________________________________________________________________________________________________________________________________________________
+
+[2]  Write a PL/SQL program to raise an unnamed user defined exception when the input department number is negative and 
+     print “deptno can not be negative” otherwise  show all the employee names working in the given department.
+
+  
+
+
+1  DECLARE
+  2  V_DEPTNO EMP.DEPTNO%TYPE;
+  3  E EXCEPTION;
+  4  BEGIN
+  5  V_DEPTNO:='&DEPTNO';
+  6  IF V_DEPTNO<0 THEN
+  7  RAISE E;
+  8  END IF;
+  9  FOR I IN(SELECT * FROM EMP WHERE
+ 10  DEPTNO=V_DEPTNO)
+ 11  LOOP
+ 12  DBMS_OUTPUT.PUT_LINE(I.ENAME);
+ 13  END LOOP;
+ 14  EXCEPTION
+ 15  WHEN E THEN
+ 16  DBMS_OUTPUT.PUT_LINE('DEPT NUMBER CANNOT BE NEGATIVE');
+ 17* END;
+SQL> /
+Enter value for deptno: 10
+old   5: V_DEPTNO:='&DEPTNO';
+new   5: V_DEPTNO:='10';
+CLARK
+KING
+MILLER
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+Enter value for deptno: 20
+old   5: V_DEPTNO:='&DEPTNO';
+new   5: V_DEPTNO:='20';
+SMITH
+JONES
+SCOTT
+ADAMS
+FORD
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+Enter value for deptno: 30
+old   5: V_DEPTNO:='&DEPTNO';
+new   5: V_DEPTNO:='30';
+ALLEN
+WARD
+MARTIN
+BLAKE
+TURNER
+JAMES
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+Enter value for deptno: 40
+old   5: V_DEPTNO:='&DEPTNO';
+new   5: V_DEPTNO:='40';
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+Enter value for deptno: -40
+old   5: V_DEPTNO:='&DEPTNO';
+new   5: V_DEPTNO:='-40';
+DEPT NUMBER CANNOT BE NEGATIVE
+
+PL/SQL procedure successfully completed.
+
+______________________________________________________________________________________________________________________________________________________________________
+
+
