@@ -1,0 +1,273 @@
+[1]
+
+class Employe {
+	float salary=40000;
+
+	}
+	public class Employee2 extends Employe
+	{
+		int bonus=10000;
+		public static void main(String args[])
+		{
+			Employee2 p=new Employee2();
+			System.out.println("Programmer salary is:"+p.salary);  
+			System.out.println("Bonus of Programmer is:"+p.bonus);  
+		}
+	}
+
+Output:-
+
+Programmer salary is:40000.0
+Bonus of Programmer is:10000
+
+
+
+
+
+[2]
+
+class Animal
+{
+	void eat() {
+		System.out.println("Eating...");
+		
+	}}
+	class Dog extends Animal{
+		void bark()
+		{
+			System.out.println("Barking...");
+		}}
+		class BabyDog extends Dog{
+			void weep()
+			{
+				System.out.println("Weeping...");
+			}
+			}
+
+public class TestInheritance {
+public static void main(String args[])
+{
+	BabyDog d=new BabyDog();
+	d.weep();
+	d.bark();
+	d.eat();
+}
+}
+
+Output:-
+
+Weeping...
+Barking...
+Eating...
+
+
+
+
+
+[3]
+
+ class TestOverloading {
+	static int add(int a,int b)
+	{
+		return a+b;
+	}
+	static int add(int a,int b,int c)
+	{
+		return a+b+c;
+	}
+}
+public class Adder{
+	public static void main(String args[])
+	{
+		System.out.println(TestOverloading.add(11,11));
+		System.out.println(TestOverloading.add(11,11,11));
+	}
+}
+
+Output:-
+
+22
+33
+
+
+
+
+
+[4]
+
+class Vehicle
+{
+	void run()
+	{
+		System.out.println("Vehicle is running");
+	}
+	}
+
+public class Bike2 extends Vehicle{
+void run()
+{
+	System.out.println("Bike is running safely");}
+	public static void main(String args[])
+	{
+	Bike2 obj=new Bike2();
+	obj.run();
+	}
+}
+
+Output:-
+
+Bike is running safely.
+
+
+
+
+
+[5]
+
+import java.util.*;
+public class Account {
+	int Accno,Phone_no;
+	String name;
+    float balance_amt;
+	void getInput(int Accno, String name,long Phone_no)
+	{
+	}
+	float Deposit(float d1)
+	{
+		balance_amt+=d1;
+		return balance_amt;
+	}
+	float Withdraw(float w1)
+	{
+		balance_amt-=w1;
+		return balance_amt;
+	}
+public static void main(String args[])
+{
+	Scanner sc=new Scanner(System.in);
+	System.out.println("Enter your name,account no. and phone no.");
+	String n=sc.next();
+	int Acc=sc.nextInt();
+	int pn=sc.nextInt();
+	Account a=new Account();
+	a.getInput(Acc,n,pn);
+	
+	System.out.println("Enter 1 for deposit, 2 for withdraw");
+	int ch=sc.nextInt();
+	System.out.println("Enter the amount");
+	int d=sc.nextInt();
+	switch (ch)
+	{
+		case 1:
+            System.out.println("Balance amount after depositting : "+a.Deposit(d));
+            break;
+		case 2:
+			System.out.println("Balance amount after withdrawing : "+a.Withdraw(d));
+			break;
+		default:
+			break;
+	}
+    }
+}
+
+Output:-
+
+Enter your name,account no. and phone no.
+Rashika
+123456789
+1234567890
+Enter 1 for deposit, 2 for withdraw
+1
+Enter the amount
+30000
+Balance amount after depositting : 30000.0
+
+
+
+
+
+
+[6]
+
+import java.util.Scanner;
+
+class Book {
+	String title;
+	String author;
+	double cost;
+	int no_of_books;
+
+	public Book(String title, String author, double cost, int no_of_books) {
+		this.title = title;
+		this.author = author;
+		this.cost = cost;
+		this.no_of_books = no_of_books;
+	}
+
+	void display() {
+		System.out.println("Title: " + title + ", Author: " + author);
+		System.out.println("Cost: " + cost);
+	}
+}
+
+public class Q {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter data for books.");
+		Book x[] = new Book[3];
+		
+		for (int i = 0; i < 3; i++) {
+			System.out.print("Enter title: ");
+			String title = sc.next();
+			System.out.print("Enter author: ");
+			String author = sc.next();
+			System.out.print("Enter cost: ");
+			double cost = sc.nextDouble();
+			System.out.print("Enter no of books: ");
+			int no_of_books = sc.nextInt();
+			x[i] = new Book(title, author, cost, no_of_books);
+		}
+
+		System.out.print("\nEnter title to search: ");
+		String title = sc.next();
+		System.out.print("Enter no of books required: ");
+		int no_of_books = sc.nextInt();
+
+		boolean found = false;
+		for (int i = 0; i < 3; i++) {
+			if (title.equals(x[i].title) && (no_of_books <= x[i].no_of_books)) {
+				found = true;
+				x[i].display();
+				System.out.println("Books are sufficient.");
+				System.out.println("Total cost of books: " + (x[i].cost * no_of_books));
+			}
+		}
+
+		if (found == false) {
+			System.out.println("No books found.");
+		}
+	}
+}
+
+Output:-
+
+Enter data for books.
+Enter title: Maths
+Enter author: Agarwal
+Enter cost: 200
+Enter no of books: 2
+Enter title: Science
+Enter author: Verma
+Enter cost: 3
+Enter no of books: 3
+Enter title: English
+Enter author: Martin
+Enter cost: 1200
+Enter no of books: 4
+
+Enter title to search: English
+Enter no of books required: 1
+Title: English, Author: Martin
+Cost: 1200.0
+Books are sufficient.
+Total cost of books: 1200.0
