@@ -1,0 +1,225 @@
+*CREATING  A  TRIGGER*
+
+[1]
+
+  create or replace trigger secure_emp
+  before insert on emp
+  begin
+  if (to_char(SYSDATE,'DY') in ('sat','sun')) or
+  (to_char(SYSDATE,'HH24:MI')
+  NOT BETWEEN '08:00' AND '18:00') THEN
+  RAISE_APPLICATION_ERROR(-20500,'You may insert'
+  ||'into EMPLOYEES table only during'
+  ||'normal business hours.');
+  END IF;
+  END;
+ /
+
+Trigger created.
+
+SQL> INSERT INTO EMP VALUES(7000,'RASHIKA','BTA',7839,SYSDATE,5000,100,10);
+INSERT INTO EMP VALUES(7000,'RASHIKA','BTA',7839,SYSDATE,5000,100,10)
+            *
+ERROR at line 1:
+ORA-20500: You may insertinto EMPLOYEES table only duringnormal business hours.
+ORA-06512: at "SCOTT.SECURE_EMP", line 5
+ORA-04088: error during execution of trigger 'SCOTT.SECURE_EMP'
+
+-------------------------------------------------------------------
+
+[2]
+
+   CREATE OR REPLACE TRIGGER RESTRICT_SALARY
+   BEFORE INSERT OR UPDATE OF SAL ON EMP FOR EACH ROW
+   BEGIN
+   IF NOT(:NEW.JOB IN('ANALYST','PRESIDENT'))
+   AND :NEW.SAL >3000 THEN
+   RAISE_APPLICATION_ERROR(-20202,'EMPLOYEE CANNOT EARN MORE THAN $5000.');
+   END IF;
+   END;
+SQL> /
+
+Trigger created.
+
+SQL> UPDATE EMP
+  2  SET SAL=12000
+  3  WHERE ENAME='SCOTT';
+
+1 row updated.
+
+SQL> SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87      12000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82      12000                    10
+
+14 rows selected.
+
+----------------------------------------------------------------------------------------------
+
+SQL> DROP TRIGGER RESTRICT_SALARY;
+
+Trigger dropped.
+
+SQL> DROP TRIGGER SECURE_EMP;
+
+Trigger dropped.
+
+---------------------------------------------------------------------------------------------
+
+[3]
+
+
+  1  CREATE OR REPLACE TRIGGER AUDIT_EMP_VALUES
+  2  AFTER DELETE OR INSERT OR UPDATE ON EMP
+  3  FOR EACH ROW
+  4  BEGIN
+  5  INSERT INTO AUDIT_EMP(USER_NAME,TIME_STAMP,ID,OLD_LAST_NAME,NEW_LAST_NAME,OLD_TITLE,NEW_TITLE,OLD_SALARY,NEW_SALARY)
+  6  VALUES(USER,SYSDATE,:OLD.EMPNO,:OLD.ENAME,:NEW.ENAME,:OLD.JOB,:NEW.JOB,:OLD.SAL,:NEW.SAL);
+  7* END;
+SQL> /
+
+Trigger created.
+
+SQL> UPDATE EMP
+  2  SET SAL=0
+  3  WHERE ENAME='MILLER';
+
+1 row updated.
+
+SQL> SELECT * FROM AUDIT_EMP;
+
+USER_NAME                      TIME_STAM         ID OLD_LAST_NAME             NEW_LAST_NAME          OLD_TITLE
+------------------------------ --------- ---------- ------------------------- ------------------------- ----------
+NEW_TITLE  OLD_SALARY NEW_SALARY
+---------- ---------- ----------
+SCOTT                          03-JAN-20       7934 MILLER                    MILLER                 CLERK
+CLERK           12000          0
+
+
+SQL> SET LINESIZE 200
+SQL> /
+
+USER_NAME                      TIME_STAM         ID OLD_LAST_NAME             NEW_LAST_NAME          OLD_TITLE  NEW_TITLE  OLD_SALARY NEW_SALARY
+------------------------------ --------- ---------- ------------------------- ------------------------- ---------- ---------- ---------- ----------
+SCOTT                          03-JAN-20       7934 MILLER                    MILLER                 CLERK         CLERK           12000          0
+
+_______________________________________________________________________________________________________________________________________________________     
+*CURSORS AND TRIGGERS*
+
+
+SQL> SET SERVEROUTPUT ON
+  1  DECLARE
+  2  CURSOR C1 IS SELECT * FROM DEPT;
+  3  CURSOR C2 (PDNO NUMBER)IS SELECT * FROM EMP WHERE DEPTNO=PDNO;
+  4  BEGIN
+  5  FOR VDEP IN C1
+  6  LOOP
+  7  DBMS_OUTPUT.PUT_LINE('--------------');
+  8  DBMS_OUTPUT.PUT_LINE(VDEP.DEPTNO||' '||VDEP.DNAME);
+  9  DBMS_OUTPUT.PUT_LINE('--------------');
+ 10  FOR EREC IN C2(VDEP.DEPTNO)
+ 11  LOOP
+ 12  DBMS_OUTPUT.PUT_LINE(EREC.EMPNO||' '||EREC.ENAME||' '||EREC.DEPTNO);
+ 13  END LOOP;
+ 14  END LOOP;
+ 15* END;
+SQL> /
+--------------
+10 ACCOUNTING
+--------------
+7782 CLARK 10
+7839 KING 10
+7934 MILLER 10
+--------------
+20 RESEARCH
+--------------
+7369 SMITH 20
+7566 JONES 20
+7788 SCOTT 20
+7876 ADAMS 20
+7902 FORD 20
+--------------
+30 SALES
+--------------
+7499 ALLEN 30
+7521 WARD 30
+7654 MARTIN 30
+7698 BLAKE 30
+7844 TURNER 30
+7900 JAMES 30
+--------------
+40 OPERATIONS
+--------------
+
+PL/SQL procedure successfully completed.
+
+
+_____________________________________________________________________________________________________
+
+*LOGON AND LOGOFF TRIGGERS*
+
+    CREATE TABLE LOG_TRIG_TABLE
+     (
+     LOG_DATE DATE,
+    USER_ID NUMBER(12),
+    ACTION VARCHAR2(25)
+    )
+   /
+
+Table created.
+
+
+  CREATE OR REPLACE TRIGGER LOGON_TRIG
+        AFTER LOGON ON SCHEMA
+        BEGIN
+       INSERT INTO LOG_TRIG_TABLE(USER_ID,LOG_DATE,ACTION)
+        VALUES(USER,SYSDATE,'Logging on');
+      END;
+  /
+
+Trigger created.
+
+
+     CREATE OR REPLACE TRIGGER LOGOFF_TRIG
+        BEFORE LOGOFF ON SCHEMA
+        BEGIN
+        INSERT INTO LOG_TRIG_TABLE(USER_ID,LOG_DATE,ACTION)
+        VALUES(USER,SYSDATE,'Logging off');
+      END;
+/
+
+Trigger created.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
