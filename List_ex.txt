@@ -1,0 +1,63 @@
+#list->class
+L1=list([10,20,30])
+L2=[10,12.5,'python',['a','b']]#it is indexed as 0,1,2,3 and -4,-3,-2,-1
+ #print(L2)
+ #print(L2[1])
+ #print(L2[2][1])#chooses value at 2nd index and prints the character at 1st index of that particular value
+ #print(L2[-1:1:-1])#negative indexing applied from -1 to 1st index
+
+#add
+L2.append(200)#adds value at the last index
+ #print('append=',L2)
+L2.insert(2,300)#adds at the specified index i.e. 2
+ #print('Insert=',L2)
+L3=[10,20]
+L4=['A','B']
+L5=L3+L4#creates new object
+L6=L3*10
+ #print('L5=',L5,'L6=',L6,sep='\n')
+L3.extend(L4)#modifies existing object
+ #print('Extend=',L3)
+
+#remove
+r1=L5.pop()#always removes from end, and returns the removed value
+ #print('r1=',r1,L5)
+r2=L5.pop(2)
+ #print('r2=',r2,L5)
+r3=L5.remove(20)#doesnt returns any value so displays none
+ #print('remove=',r3,L5)
+del L5[0]
+ #print('After del=',L5)
+
+#update
+ #print('L3=',L3)
+L3[1]='java'
+ #print('After update=',L3)
+
+#some other methods
+L6=[10,30,5,20]
+L6.sort()#Asc
+ #print('sort arc=',L6)#sort doesnt work on heterogenous data
+L7=['z','a','b']
+L7.sort(reverse=True)#desc
+ #print('sort desc=',L7)
+L8=[10,'a',20,'b']
+L8.reverse()
+ #print('reverse=',L8)
+
+L8.clear()
+ #print('L8=',L8)
+
+#copy
+L=[10,['a','b']]
+M=L #reference copy
+N=L.copy() #shallow copy
+#copy module--> copy(),deepcopy()
+import copy
+P=copy.deepcopy(L)
+print(id(L[0]),id(P[0]))
+print(id(L[1]),id(P[1]))
+cp=copy.deepcopy
+q=cp(L)
+
+
