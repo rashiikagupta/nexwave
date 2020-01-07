@@ -1,0 +1,45 @@
+F1=open('log_report.txt','w')
+F2=open('log_report.csv','w')
+F1.write('IP\tDATE\tPICS\tURL')
+F2.writelines(['IP','DATE','PICS','URL\n'])
+F3=open(r'C:\Users\georg\PycharmProjects\nexwave\venv\log\server_log.txt')
+for line in F3:
+    if line[:3].isdigit():
+        #print(line)
+        sp=line.split()
+        #print(sp)
+        ip=sp[0]
+        #print(ip)
+        dt=sp[3] #'[26/Apr/2000:.....]
+        dt1=dt[1:12]
+        #print(dt)
+        #dt2=dt[1:dt.index(':')]
+
+#if sp[6].startswith('/pics)
+        if 'pics' in sp[6]:
+            im=sp[6]#'/pics/abc.jpg'
+            im=im[6:]#one way of doing it
+
+            #im2=im.split('/')#[/,'pics','abc.jrs']
+            #im2=im2[-1] #second way of doing it
+            #im3=im.lstrip('/pics/')#third way of doing it
+           # im4=im.replace('/pics/','')#fourth way of doing it
+        else:
+            im1='No Image'
+        url=sp[10][1:-1]
+        print(ip,dt1,im,url,sep='\t',file=F1)
+        print(ip,dt1,im,url,sep='\t',file=F2)
+#print(ip,dt2,im1)
+F1.close()
+F3.close()
+F2.close()
+
+_________________________________________________________________________________________________________________
+LOG_REPORT.TXT
+
+IP	DATE	PICS	URL123.123.123.123	26/Apr/2000	wpaper.gif	http://www.jafsoft.com/asctortf/
+123.123.123.123	26/Apr/2000	wpaper.gif	http://search.netscape.com/Computers/Data_Formats/Document/Text/RTF
+123.123.123.123	26/Apr/2000	5star2000.gif	http://www.jafsoft.com/asctortf/
+123.123.123.123	26/Apr/2000	5star.gif	http://www.jafsoft.com/asctortf/
+123.123.123.123	26/Apr/2000	a2hlogo.jpg	http://www.jafsoft.com/asctortf/
+123.123.123.123	26/Apr/2000	a2hlogo.jpg	http://www.jafsoft.com/asctortf/

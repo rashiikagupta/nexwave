@@ -1,0 +1,46 @@
+a=10
+if a==10:
+    print('a equals to 10')
+elif a>10:
+    print('a greater than 10')
+elif a<10:
+    print('a lesser than 10')
+
+a=5
+if a==10:
+    print('a equals to 10')
+elif a>10:
+    print('a greater than 10')
+else:
+    print('a lesser than 10')
+
+s='python'
+if 'th' in s:
+    print('substring found')
+if not s.startswith('java'):
+    print('not java')
+if s!='c++':
+    print('not c++')
+if s[1:3]=='yt':
+    print('yt found')
+L1=[10,20]
+L2=L1
+L3=L1.copy()
+if 20 in L1:
+    print('20 found')
+if L1 is L2:
+    print('Both Refers to the same object')
+if id(L1)==id(L2):
+    print('Both Refers to the same object')
+if L1==L3:
+    print('Contents are same')
+D={'A':10,'B':20}
+if 'B'in D: #by default it searches for keys
+    print('Key B found')
+if 'B' in D.keys():
+    print('Key B found')
+if 20 in D.values():
+    print('20 found')
+if ('A',10) in D.items(): #[('A',10),('B',20)]
+    print('item found')
+
